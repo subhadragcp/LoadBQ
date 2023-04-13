@@ -54,31 +54,22 @@ public class loadJsonFromGCS {
             Job job = bigquery.create(JobInfo.of(loadConfig));
             // Blocks until this load table job completes its execution, either failing or succeeding.
             job = job.waitFor();
-            String Status = job.getStatus().getState().name();
+           // String Status = job.getStatus().getState().name();
 
             if (job.getStatus().getError() != null) {
                 System.out.println("BigQuery was not able to load into the table due to an error:" + job.getStatus().getError());
 
-                //MoveToError mvobj =new MoveToError();
-                //mvobj.moveObject("my-kubernetes-project-364702","testcloudfunction3subhadra","test6.txt","functionlistsubhadra","test6.txt");
-              //  DeleteObjects delobj = new DeleteObjects();
-               // delobj.deleteObject("my-kubernetes-project-364702","testcloudfunction3subhadra","test7.txt");
-               // System.out.println("BQObj deleted!");
                 jobStat = false;
             } else {
                 System.out.println("BigQuery was able to load into the table1 :");
 
-               // MoveToError mvobj =new MoveToError();
-              //  mvobj.moveObject("my-kubernetes-project-364702","testcloudfunction3subhadra","test6.txt","functionlistsubhadra","test6.txt");
                 jobStat =  true;
             }
 
         } catch (BigQueryException | InterruptedException e) {
-            System.out.println("Column not added during load append \n" + e.toString());
-            jobStat =  false;
-            //MoveToError mvobj =new MoveToError();
-            //mvobj.moveObject("my-kubernetes-project-364702","testcloudfunction3subhadra","test6.txt","functionlistsubhadra","test6.txt");
-        }
+                 System.out.println("Column not added during load append \n" + e.toString());
+                jobStat =  false;
+                   }
         return jobStat;
     }
 }
